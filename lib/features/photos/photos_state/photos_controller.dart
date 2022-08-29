@@ -17,7 +17,8 @@ class PhotosController extends ValueNotifier<PhotosStateModel> {
       (error) => value = value.copyWith(failure: error),
       (photos) {
         final currentPhotos = value.photos;
-        final newPhotos = [...currentPhotos, ...photos].toList();
+        final newPhotos = <PhotoModel>{...currentPhotos, ...photos}.toList();
+
         value = value.copyWith(
           photos: newPhotos,
           photosPage: newPhotosPage,

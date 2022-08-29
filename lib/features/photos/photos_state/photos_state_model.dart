@@ -21,7 +21,7 @@ class PhotosStateModel {
   final int selectedAuthorPhotosPage;
   final Failure? failure;
 
-  PhotosStateModel initial() {
+  factory PhotosStateModel.initial() {
     return const PhotosStateModel(
       photos: <PhotoModel>[],
       authorPhotos: <PhotoModel>[],
