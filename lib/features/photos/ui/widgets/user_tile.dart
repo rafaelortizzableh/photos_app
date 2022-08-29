@@ -16,10 +16,11 @@ class UserTileOnPhotosDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
+        Navigator.pushNamedAndRemoveUntil(
           context,
           AuthorScreen.routeName,
           arguments: photoAuthor,
+          (route) => route.isFirst,
         );
       },
       child: Row(

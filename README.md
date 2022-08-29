@@ -1,6 +1,6 @@
 # Photos App
 
-A Simple Flutter Application to view Photos, and its authors. 
+A Simple Flutter Application to view Photos, and its authors.
 
 ## Running the Application
 

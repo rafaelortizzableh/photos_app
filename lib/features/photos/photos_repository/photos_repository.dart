@@ -3,6 +3,7 @@ import 'dart:io' show SocketException;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 import '../../../core/core.dart';
 import '../photos.dart';
@@ -49,6 +50,7 @@ class UnsplashPhotosRepository implements PhotosRepository {
           .toList();
       return photos;
     } on DioError catch (e) {
+      debugPrint(e.toString());
       if (e is SocketException) {
         throw Failure(
           message: _noConnectionMessage,
@@ -73,13 +75,17 @@ class UnsplashPhotosRepository implements PhotosRepository {
       );
 
       final unwrappedList = response.data as List;
-      final photos = unwrappedList
+      final filteredList = unwrappedList.whereNot(
+        (element) => element['sponsorship'] != null,
+      );
+      final photos = filteredList
           .map(
             (photo) => PhotoRemoteEntity.fromMap(photo),
           )
           .toList();
       return photos;
     } on DioError catch (e) {
+      debugPrint(e.toString());
       if (e is SocketException) {
         throw Failure(
           message: _noConnectionMessage,
