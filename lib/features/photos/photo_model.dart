@@ -4,20 +4,15 @@ class PhotoModel {
   final String smallPhotoUrl;
   final String regularPhotoUrl;
   final String largePhotoUrl;
-  final String username;
-  final String userFirstName;
-  final String userLastName;
-  final String userBio;
+  final PhotoAuthor photoAuthor;
   final String title;
   final int likes;
+
   const PhotoModel({
     required this.smallPhotoUrl,
     required this.regularPhotoUrl,
     required this.largePhotoUrl,
-    required this.username,
-    required this.userFirstName,
-    required this.userLastName,
-    required this.userBio,
+    required this.photoAuthor,
     required this.title,
     required this.likes,
   });
@@ -26,23 +21,17 @@ class PhotoModel {
     String? smallPhotoUrl,
     String? regularPhotoUrl,
     String? largePhotoUrl,
-    String? username,
-    String? userFirstName,
-    String? userLastName,
+    PhotoAuthor? photoAuthor,
     String? title,
     int? likes,
-    String? userBio,
   }) {
     return PhotoModel(
       smallPhotoUrl: smallPhotoUrl ?? this.smallPhotoUrl,
       regularPhotoUrl: regularPhotoUrl ?? this.regularPhotoUrl,
       largePhotoUrl: largePhotoUrl ?? this.largePhotoUrl,
-      username: username ?? this.username,
-      userFirstName: userFirstName ?? this.userFirstName,
-      userLastName: userLastName ?? this.userLastName,
+      photoAuthor: photoAuthor ?? this.photoAuthor,
       title: title ?? this.title,
       likes: likes ?? this.likes,
-      userBio: userBio ?? this.userBio,
     );
   }
 
@@ -51,18 +40,17 @@ class PhotoModel {
       smallPhotoUrl: photoRemoteEntity.urls.small,
       regularPhotoUrl: photoRemoteEntity.urls.regular,
       largePhotoUrl: photoRemoteEntity.urls.full,
-      username: photoRemoteEntity.user.username,
-      userFirstName: photoRemoteEntity.user.firstName ?? '',
-      userLastName: photoRemoteEntity.user.lastName ?? '',
+      photoAuthor: PhotoAuthor.fromPhotoAuthorRemoteEntity(
+        photoRemoteEntity.photoAuthorRemoteEntity,
+      ),
       title: photoRemoteEntity.id,
       likes: photoRemoteEntity.likes ?? 0,
-      userBio: photoRemoteEntity.user.bio ?? '',
     );
   }
 
   @override
   String toString() {
-    return 'PhotoModel(smallPhotoUrl: $smallPhotoUrl, regularPhotoUrl: $regularPhotoUrl, largePhotoUrl: $largePhotoUrl, username: $username, userFirstName: $userFirstName, userLastName: $userLastName, title: $title, description: $likes)';
+    return 'PhotoModel(smallPhotoUrl: $smallPhotoUrl, regularPhotoUrl: $regularPhotoUrl, largePhotoUrl: $largePhotoUrl, photoAuthor: $photoAuthor, title: $title, likes: $likes)';
   }
 
   @override
@@ -73,9 +61,7 @@ class PhotoModel {
         other.smallPhotoUrl == smallPhotoUrl &&
         other.regularPhotoUrl == regularPhotoUrl &&
         other.largePhotoUrl == largePhotoUrl &&
-        other.username == username &&
-        other.userFirstName == userFirstName &&
-        other.userLastName == userLastName &&
+        other.photoAuthor == photoAuthor &&
         other.title == title &&
         other.likes == likes;
   }
@@ -85,10 +71,71 @@ class PhotoModel {
     return smallPhotoUrl.hashCode ^
         regularPhotoUrl.hashCode ^
         largePhotoUrl.hashCode ^
-        username.hashCode ^
-        userFirstName.hashCode ^
-        userLastName.hashCode ^
+        photoAuthor.hashCode ^
         title.hashCode ^
         likes.hashCode;
+  }
+}
+
+class PhotoAuthor {
+  final String username;
+  final String? name;
+  final String? thumbnailProfilePicUrl;
+  final String? profilePicUrl;
+
+  const PhotoAuthor({
+    required this.username,
+    this.name,
+    this.thumbnailProfilePicUrl,
+    this.profilePicUrl,
+  });
+
+  PhotoAuthor copyWith({
+    String? username,
+    String? name,
+    String? thumbnailProfilePicUrl,
+    String? profilePicUrl,
+  }) {
+    return PhotoAuthor(
+      username: username ?? this.username,
+      name: name ?? this.name,
+      thumbnailProfilePicUrl:
+          thumbnailProfilePicUrl ?? this.thumbnailProfilePicUrl,
+      profilePicUrl: profilePicUrl ?? this.profilePicUrl,
+    );
+  }
+
+  factory PhotoAuthor.fromPhotoAuthorRemoteEntity(
+      PhotoAuthorRemoteEntity photoAuthorRemoteEntity) {
+    return PhotoAuthor(
+      username: photoAuthorRemoteEntity.username,
+      name: photoAuthorRemoteEntity.name,
+      thumbnailProfilePicUrl: photoAuthorRemoteEntity.profileImage?.small,
+      profilePicUrl: photoAuthorRemoteEntity.profileImage?.medium,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'PhotoAuthor(username: $username, name: $name, thumbnailProfilePicUrl: $thumbnailProfilePicUrl, profilePicUrl: $profilePicUrl)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is PhotoAuthor &&
+        other.username == username &&
+        other.name == name &&
+        other.thumbnailProfilePicUrl == thumbnailProfilePicUrl &&
+        other.profilePicUrl == profilePicUrl;
+  }
+
+  @override
+  int get hashCode {
+    return username.hashCode ^
+        name.hashCode ^
+        thumbnailProfilePicUrl.hashCode ^
+        profilePicUrl.hashCode;
   }
 }
