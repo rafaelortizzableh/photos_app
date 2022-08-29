@@ -82,12 +82,14 @@ class PhotoAuthor {
   final String? name;
   final String? thumbnailProfilePicUrl;
   final String? profilePicUrl;
+  final String? bio;
 
   const PhotoAuthor({
     required this.username,
     this.name,
     this.thumbnailProfilePicUrl,
     this.profilePicUrl,
+    this.bio,
   });
 
   PhotoAuthor copyWith({
@@ -95,6 +97,7 @@ class PhotoAuthor {
     String? name,
     String? thumbnailProfilePicUrl,
     String? profilePicUrl,
+    String? bio,
   }) {
     return PhotoAuthor(
       username: username ?? this.username,
@@ -102,6 +105,7 @@ class PhotoAuthor {
       thumbnailProfilePicUrl:
           thumbnailProfilePicUrl ?? this.thumbnailProfilePicUrl,
       profilePicUrl: profilePicUrl ?? this.profilePicUrl,
+      bio: bio ?? this.bio,
     );
   }
 
@@ -112,12 +116,13 @@ class PhotoAuthor {
       name: photoAuthorRemoteEntity.name,
       thumbnailProfilePicUrl: photoAuthorRemoteEntity.profileImage?.small,
       profilePicUrl: photoAuthorRemoteEntity.profileImage?.medium,
+      bio: photoAuthorRemoteEntity.bio ?? '',
     );
   }
 
   @override
   String toString() {
-    return 'PhotoAuthor(username: $username, name: $name, thumbnailProfilePicUrl: $thumbnailProfilePicUrl, profilePicUrl: $profilePicUrl)';
+    return 'PhotoAuthor(username: $username, name: $name, thumbnailProfilePicUrl: $thumbnailProfilePicUrl, profilePicUrl: $profilePicUrl, bio: $bio)';
   }
 
   @override
@@ -128,7 +133,8 @@ class PhotoAuthor {
         other.username == username &&
         other.name == name &&
         other.thumbnailProfilePicUrl == thumbnailProfilePicUrl &&
-        other.profilePicUrl == profilePicUrl;
+        other.profilePicUrl == profilePicUrl &&
+        other.bio == bio;
   }
 
   @override
@@ -136,6 +142,7 @@ class PhotoAuthor {
     return username.hashCode ^
         name.hashCode ^
         thumbnailProfilePicUrl.hashCode ^
-        profilePicUrl.hashCode;
+        profilePicUrl.hashCode ^
+        bio.hashCode;
   }
 }

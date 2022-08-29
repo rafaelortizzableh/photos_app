@@ -48,12 +48,7 @@ class PhotosController extends ValueNotifier<PhotosStateModel> {
     );
   }
 
-  void selectAuthorFromPhoto({required PhotoModel photo}) {
-    final photoAuthor = photo.photoAuthor;
-    value = value.copyWith(selectedAuthor: photoAuthor);
-  }
-
-  void unselectAuthorFromPhoto() {
-    value = value.removeSelectedAuthor();
+  void resetAuthorPhotos() {
+    value = value.copyWith(authorPhotos: []);
   }
 }

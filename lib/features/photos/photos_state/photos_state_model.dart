@@ -30,17 +30,6 @@ class PhotosStateModel {
     );
   }
 
-  PhotosStateModel removeSelectedAuthor() {
-    return PhotosStateModel(
-      photos: photos,
-      authorPhotos: authorPhotos,
-      photosPage: photosPage,
-      selectedAuthorPhotosPage: selectedAuthorPhotosPage,
-      failure: failure,
-      selectedAuthor: null,
-    );
-  }
-
   PhotosStateModel removeFailure() {
     return PhotosStateModel(
       photos: photos,

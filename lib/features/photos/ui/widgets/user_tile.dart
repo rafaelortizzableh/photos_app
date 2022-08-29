@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../photos.dart';
 
-class UserTile extends StatelessWidget {
-  const UserTile({
+class UserTileOnPhotosDetailPage extends StatelessWidget {
+  const UserTileOnPhotosDetailPage({
     Key? key,
-    required this.photo,
+    required this.photoAuthor,
     required this.textTheme,
   }) : super(key: key);
 
-  final PhotoModel photo;
+  final PhotoAuthor photoAuthor;
   final TextTheme textTheme;
 
   @override
@@ -19,17 +19,24 @@ class UserTile extends StatelessWidget {
         Navigator.pushNamed(
           context,
           AuthorScreen.routeName,
-          arguments: photo.photoAuthor,
+          arguments: photoAuthor,
         );
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CircleAvatar(
-            foregroundImage: NetworkImage(
-              photo.photoAuthor.profilePicUrl ?? photo.smallPhotoUrl,
+          SizedBox(
+            height: 37.0,
+            width: 37.0,
+            child: Hero(
+              tag: photoAuthor.username,
+              child: CircleAvatar(
+                foregroundImage: NetworkImage(
+                  photoAuthor.profilePicUrl ?? '',
+                ),
+                radius: 37.0,
+              ),
             ),
-            radius: 37.0,
           ),
           const SizedBox(width: 8.0),
           SizedBox(
@@ -39,7 +46,7 @@ class UserTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  photo.photoAuthor.name ?? photo.photoAuthor.username,
+                  photoAuthor.name ?? photoAuthor.username,
                   style: textTheme.subtitle1?.copyWith(
                     fontSize: 12.0,
                     fontWeight: FontWeight.w500,
@@ -54,6 +61,75 @@ class UserTile extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class UserTileOnAuthorPage extends StatelessWidget {
+  const UserTileOnAuthorPage({
+    Key? key,
+    required this.photoAuthor,
+    required this.textTheme,
+  }) : super(key: key);
+
+  final PhotoAuthor photoAuthor;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 25.0,
+        right: 22.0,
+        top: 25.0,
+        bottom: 25.0,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 63.0,
+            width: 63.0,
+            child: Hero(
+              tag: photoAuthor.username,
+              child: CircleAvatar(
+                foregroundImage: NetworkImage(
+                  photoAuthor.profilePicUrl ?? '',
+                ),
+                radius: 63.0,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8.0),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  photoAuthor.name ?? photoAuthor.username,
+                  style: textTheme.subtitle1?.copyWith(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                if (photoAuthor.bio != null) ...[
+                  Text(
+                    photoAuthor.bio!,
+                    style: textTheme.subtitle1?.copyWith(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ],
             ),
           )
