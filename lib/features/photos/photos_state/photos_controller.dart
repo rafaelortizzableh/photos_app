@@ -51,4 +51,8 @@ class PhotosController extends ValueNotifier<PhotosStateModel> {
   void resetAuthorPhotos() {
     value = value.copyWith(authorPhotos: []);
   }
+
+  void resetError() {
+    value = value.removeFailure();
+  }
 }
