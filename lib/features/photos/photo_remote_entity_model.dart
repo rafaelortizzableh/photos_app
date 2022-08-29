@@ -17,7 +17,6 @@ class PhotoRemoteEntity {
     this.altDescription,
     this.links,
     this.likes,
-    this.sponsorship,
   });
 
   final String id;
@@ -32,7 +31,6 @@ class PhotoRemoteEntity {
   final UrlsRemoteEntity urls;
   final PhotoRemoteEntityLinks? links;
   final int? likes;
-  final Sponsorship? sponsorship;
   final PhotoAuthorRemoteEntity photoAuthorRemoteEntity;
 
   factory PhotoRemoteEntity.fromMap(Map<String, dynamic> map) =>
@@ -49,7 +47,6 @@ class PhotoRemoteEntity {
         urls: UrlsRemoteEntity.fromMap(map['urls']),
         links: PhotoRemoteEntityLinks.fromMap(map['links']),
         likes: map['likes'],
-        sponsorship: Sponsorship.fromMap(map['sponsorship']),
         photoAuthorRemoteEntity: PhotoAuthorRemoteEntity.fromMap(map['user']),
       );
 }
