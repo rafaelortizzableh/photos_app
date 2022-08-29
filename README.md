@@ -1,16 +1,22 @@
-# photos_app
+# Photos App
 
-A new Flutter project.
+A Simple Flutter Application to view Photos, and its authors. 
 
-## Getting Started
+## Running the Application
 
-This project is a starting point for a Flutter application.
+This application is built with Flutter.
 
-A few resources to get you started if this is your first Flutter project:
+To Run it: 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+`flutter run --dart-define=PHOTOS_API=[UNSPLASH_ACCESS_KEY]`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To Build it:
+
+`flutter run --dart-define=PHOTOS_API=[UNSPLASH_ACCESS_KEY]`
+
+
+## About the app
+
+This app uses the Repository-Service pattern to fetch data. 
+
+Provider is used to manage the feature's state and Dependency Injection.
