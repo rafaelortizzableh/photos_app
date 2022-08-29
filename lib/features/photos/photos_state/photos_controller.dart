@@ -10,22 +10,40 @@ class PhotosController extends ValueNotifier<PhotosStateModel> {
 
   final PhotosService _photosService;
 
-  void getPhotos({int page = 1}) async {
-    final photosResult = await _photosService.getPhotos(page: page);
+  void getPhotos() async {
+    final newPhotosPage = value.photosPage + 1;
+    final photosResult = await _photosService.getPhotos(page: newPhotosPage);
     photosResult.when(
       (error) => value = value.copyWith(failure: error),
-      (photos) => value = value.copyWith(photos: photos),
+      (photos) {
+        final currentPhotos = value.photos;
+        final newPhotos = [...currentPhotos, ...photos].toList();
+        value = value.copyWith(
+          photos: newPhotos,
+          photosPage: newPhotosPage,
+        );
+      },
     );
   }
 
-  void getAuthorPhotos({required String username, int page = 1}) async {
+  void getAuthorPhotos({
+    required String username,
+  }) async {
+    final newPhotosPage = value.selectedAuthorPhotosPage + 1;
     final photosResult = await _photosService.getAuthorPhotos(
       username: username,
-      page: page,
+      page: newPhotosPage,
     );
     photosResult.when(
       (error) => value = value.copyWith(failure: error),
-      (photos) => value = value.copyWith(photos: photos),
+      (photos) {
+        final currentPhotos = value.authorPhotos;
+        final newPhotos = [...currentPhotos, ...photos].toList();
+        value = value.copyWith(
+          authorPhotos: newPhotos,
+          selectedAuthorPhotosPage: newPhotosPage,
+        );
+      },
     );
   }
 

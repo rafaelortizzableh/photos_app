@@ -25,8 +25,8 @@ class PhotosStateModel {
     return const PhotosStateModel(
       photos: <PhotoModel>[],
       authorPhotos: <PhotoModel>[],
-      photosPage: 1,
-      selectedAuthorPhotosPage: 1,
+      photosPage: 0,
+      selectedAuthorPhotosPage: 0,
     );
   }
 
